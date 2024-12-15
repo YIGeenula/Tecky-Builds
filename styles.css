@@ -141,3 +141,144 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
+
+/* Add these styles to your existing CSS */
+#hiddenReview {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (max-width: 1024px) {
+    #hiddenReview {
+        position: static !important;
+        opacity: 0;
+        height: 0;
+        margin-top: 0;
+        overflow: hidden;
+    }
+    
+    #hiddenReview.show {
+        opacity: 1;
+        height: auto;
+        margin-top: 2rem;
+    }
+}
+
+/* Reviews Slider Styles */
+.reviews-container {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    margin: 0 -0.5rem;
+    padding: 0 0.5rem;
+}
+
+.reviews-slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.review-slide {
+    width: 100%;
+    flex-shrink: 0;
+}
+
+/* Review Card Animation */
+.review-slide .group {
+    transform: translateY(20px);
+    opacity: 0;
+    animation: slideUp 0.5s ease forwards;
+}
+
+/* Adjust padding for mobile */
+@media (max-width: 640px) {
+    .reviews-container {
+        margin: 0;
+        padding: 0 1rem;
+    }
+
+    .review-slide .group {
+        padding: 1.5rem;
+    }
+}
+
+/* Maintain existing animations */
+@keyframes slideUp {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Stagger animation for cards */
+.review-slide .group:nth-child(1) { animation-delay: 0.1s; }
+.review-slide .group:nth-child(2) { animation-delay: 0.2s; }
+.review-slide .group:nth-child(3) { animation-delay: 0.3s; }
+
+/* Add these styles for FAQ items */
+.faq-answer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 0.5rem;
+}
+
+.faq-item button {
+    padding-bottom: 1.75rem; /* Increased bottom padding of the button */
+}
+
+.faq-answer > div {
+    padding-top: 1.5rem; /* Increased top padding of the answer content */
+}
+
+/* Brands Slider Styles */
+.brands-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 1rem 0;
+}
+
+.brands-track {
+    display: flex;
+    animation: scroll 25s linear infinite;
+    gap: 2rem;
+    width: fit-content;
+}
+
+.brands-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.brand-item {
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.brand-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .brand-item {
+        min-width: 120px;
+        height: 60px;
+    }
+}

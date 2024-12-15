@@ -562,4 +562,172 @@ document.getElementById('scheduleModal').addEventListener('click', (e) => {
         closeScheduleModal();
     }
 });
+
+// Add this function to handle the review card animation
+function toggleExtraReview() {
+    const hiddenReview = document.getElementById('hiddenReview');
+    const showMoreText = document.getElementById('showMoreText');
+    const showMoreIcon = document.getElementById('showMoreIcon');
+    
+    if (hiddenReview.style.right === '0px') {
+        // Hide the review
+        hiddenReview.style.right = '-150%';
+        hiddenReview.style.opacity = '0';
+        showMoreText.textContent = 'Show More Reviews';
+        showMoreIcon.classList.remove('rotate-180');
+    } else {
+        // Show the review
+        hiddenReview.style.right = '0';
+        hiddenReview.style.opacity = '1';
+        showMoreText.textContent = 'Show Less';
+        showMoreIcon.classList.add('rotate-180');
+    }
+}
+
+// Reviews Slider
+let currentReviewSlide = 0;
+const totalReviewSlides = 2;
+let reviewSlideInterval;
+
+function showReviewSlide(index) {
+    currentReviewSlide = index;
+    
+    // Update slider position
+    const slider = document.querySelector('.reviews-slider');
+    slider.style.transform = `translateX(-${index * 100}%)`;
+    
+    // Update dots
+    const dots = document.querySelectorAll('.reviews-dots button');
+    dots.forEach((dot, i) => {
+        if (i === index) {
+            dot.classList.remove('bg-white/50');
+            dot.classList.add('bg-white');
+        } else {
+            dot.classList.remove('bg-white');
+            dot.classList.add('bg-white/50');
+        }
+    });
+}
+
+function nextReviewSlide() {
+    currentReviewSlide = (currentReviewSlide + 1) % totalReviewSlides;
+    showReviewSlide(currentReviewSlide);
+}
+
+function startReviewSlideShow() {
+    if (reviewSlideInterval) {
+        clearInterval(reviewSlideInterval);
+    }
+    reviewSlideInterval = setInterval(nextReviewSlide, 5000);
+}
+
+function pauseReviewSlideShow() {
+    if (reviewSlideInterval) {
+        clearInterval(reviewSlideInterval);
+    }
+}
+
+// Initialize review slider
+document.addEventListener('DOMContentLoaded', () => {
+    const reviewsContainer = document.querySelector('.reviews-container');
+    
+    // Start slideshow
+    startReviewSlideShow();
+    
+    // Pause on hover
+    reviewsContainer.addEventListener('mouseenter', pauseReviewSlideShow);
+    reviewsContainer.addEventListener('mouseleave', startReviewSlideShow);
+    
+    // Initialize first slide
+    showReviewSlide(0);
+});
+
+// FAQ Toggle Function
+function toggleFAQ(button) {
+    const item = button.closest('.faq-item');
+    const answer = item.querySelector('.faq-answer');
+    const icon = button.querySelector('i');
+    
+    // Get all FAQ items
+    const allItems = document.querySelectorAll('.faq-item');
+    
+    // Close all other items
+    allItems.forEach(otherItem => {
+        if (otherItem !== item) {
+            const otherAnswer = otherItem.querySelector('.faq-answer');
+            const otherIcon = otherItem.querySelector('i');
+            otherAnswer.style.maxHeight = '0';
+            otherIcon.style.transform = 'rotate(0deg)';
+        }
+    });
+    
+    // Toggle current item
+    if (answer.style.maxHeight && answer.style.maxHeight !== '0px') {
+        answer.style.maxHeight = '0';
+        icon.style.transform = 'rotate(0deg)';
+    } else {
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        icon.style.transform = 'rotate(180deg)';
+    }
+}
+
+// Initialize FAQ items
+document.addEventListener('DOMContentLoaded', () => {
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const answer = item.querySelector('.faq-answer');
+        answer.style.maxHeight = '0';
+    });
+});
+
+// Handle all Web3Forms submissions
+document.addEventListener('DOMContentLoaded', () => {
+    const forms = document.querySelectorAll('form[action="https://api.web3forms.com/submit"]');
+    
+    forms.forEach(form => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Sending...
+            `;
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Show success message based on form type
+                    const isNewsletter = form.querySelector('input[name="email"][placeholder="Enter your email"]');
+                    const successMessage = isNewsletter 
+                        ? 'Thank you for subscribing to our newsletter!'
+                        : 'Thank you! Your message has been sent successfully.';
+                    
+                    showNotification('success', successMessage);
+                    form.reset();
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (error) {
+                showNotification('error', 'Sorry, something went wrong. Please try again later.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+    });
+});
  
