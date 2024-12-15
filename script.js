@@ -9,6 +9,20 @@ tailwind.config = {
                 primary: '#ff4081',
                 secondary: '#1a237e',
             },
+            keyframes: {
+                fadeIn: {
+                    '0%': { opacity: '0' },
+                    '100%': { opacity: '1' }
+                },
+                zoomIn: {
+                    '0%': { transform: 'scale(0.95)', opacity: '0' },
+                    '100%': { transform: 'scale(1)', opacity: '1' }
+                }
+            },
+            animation: {
+                fadeIn: 'fadeIn 0.3s ease-out',
+                zoomIn: 'zoomIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+            }
         },
     },
 }
@@ -250,4 +264,302 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Service Modal functionality
+const serviceDetails = {
+    'data-recovery': {
+        title: 'Data Recovery Service',
+        icon: 'fas fa-database',
+        iconClass: 'bg-gradient-to-br from-emerald-500 to-teal-600',
+        content: `
+            <div class="space-y-4">
+                <p>Our professional data recovery service helps you retrieve lost or corrupted data from various storage devices:</p>
+                
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>Hard Drive Recovery (HDD & SSD)</li>
+                    <li>Memory Card & USB Drive Recovery</li>
+                    <li>RAID System Data Recovery</li>
+                    <li>Accidental Deletion Recovery</li>
+                    <li>Corrupted File Recovery</li>
+                </ul>
+
+                <div class="bg-gray-800/50 rounded-lg p-4 mt-4">
+                    <h4 class="font-bold text-lg mb-2">Our Process:</h4>
+                    <ol class="list-decimal pl-6 space-y-2">
+                        <li>Free initial diagnosis</li>
+                        <li>Professional assessment report</li>
+                        <li>Secure data recovery procedure</li>
+                        <li>Data verification and validation</li>
+                        <li>Secure transfer of recovered data</li>
+                    </ol>
+                </div>
+
+                <p class="text-cyan-400 mt-4">Contact us now for a free consultation and quote.</p>
+            </div>
+        `
+    },
+    'pc-repair': {
+        title: 'PC Repair & Upgrade',
+        icon: 'fas fa-tools',
+        iconClass: 'bg-gradient-to-br from-purple-500 to-pink-600',
+        content: `
+            <div class="space-y-4">
+                <p>Expert PC repair and upgrade services to keep your system running at its best:</p>
+                
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>Hardware Diagnostics & Repair</li>
+                    <li>System Performance Optimization</li>
+                    <li>Component Upgrades</li>
+                    <li>Virus & Malware Removal</li>
+                    <li>Operating System Issues</li>
+                </ul>
+
+                <div class="bg-gray-800/50 rounded-lg p-4 mt-4">
+                    <h4 class="font-bold text-lg mb-2">Services Include:</h4>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li>Free diagnostic assessment</li>
+                        <li>Quick turnaround time</li>
+                        <li>Quality replacement parts</li>
+                        <li>Post-repair testing</li>
+                        <li>90-day repair warranty</li>
+                    </ul>
+                </div>
+
+                <p class="text-cyan-400 mt-4">Schedule your repair service today!</p>
+            </div>
+        `
+    },
+    'pc-maintenance': {
+        title: 'PC Maintenance',
+        icon: 'fas fa-shield-virus',
+        iconClass: 'bg-gradient-to-br from-orange-500 to-red-600',
+        content: `
+            <div class="space-y-4">
+                <p>Regular maintenance services to ensure optimal performance and longevity of your system:</p>
+                
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>Regular System Cleaning</li>
+                    <li>Performance Optimization</li>
+                    <li>Software Updates</li>
+                    <li>Security Checks</li>
+                    <li>Backup Solutions</li>
+                </ul>
+
+                <div class="bg-gray-800/50 rounded-lg p-4 mt-4">
+                    <h4 class="font-bold text-lg mb-2">Maintenance Plans:</h4>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li>Monthly maintenance packages</li>
+                        <li>Quarterly system checkups</li>
+                        <li>Emergency support</li>
+                        <li>Remote assistance</li>
+                        <li>Performance monitoring</li>
+                    </ul>
+                </div>
+
+                <p class="text-cyan-400 mt-4">Start your maintenance plan today!</p>
+            </div>
+        `
+    }
+};
+
+function showServiceModal(service) {
+    const modal = document.getElementById('serviceModal');
+    const backdrop = modal.querySelector('.absolute');
+    const modalContent = modal.querySelector('.transform');
+    const details = serviceDetails[service];
+    
+    // Update modal content
+    document.getElementById('modalIcon').className = `w-12 h-12 rounded-lg flex items-center justify-center ${details.iconClass}`;
+    document.getElementById('modalIcon').innerHTML = `<i class="${details.icon} text-2xl text-white"></i>`;
+    document.getElementById('modalTitle').textContent = details.title;
+    document.getElementById('modalContent').innerHTML = details.content;
+    
+    // Show modal with animation
+    modal.classList.remove('hidden');
+    
+    // Trigger animations after a small delay
+    requestAnimationFrame(() => {
+        backdrop.classList.add('opacity-100');
+        modalContent.classList.remove('opacity-0', 'scale-95');
+    });
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    const modal = document.getElementById('serviceModal');
+    const backdrop = modal.querySelector('.absolute');
+    const modalContent = modal.querySelector('.transform');
+    
+    // Start closing animations
+    backdrop.classList.remove('opacity-100');
+    modalContent.classList.add('opacity-0', 'scale-95');
+    
+    // Hide modal after animation completes
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }, 300);
+}
+
+// Close modal when clicking outside
+document.getElementById('serviceModal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) {
+        closeModal();
+    }
+});
+
+// Close modal on escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
+
+// Schedule Modal Functions
+function showScheduleModal() {
+    const modal = document.getElementById('scheduleModal');
+    const backdrop = modal.querySelector('.absolute');
+    const modalContent = modal.querySelector('.transform');
+    
+    // Show modal with animation
+    modal.classList.remove('hidden');
+    
+    // Trigger animations after a small delay
+    requestAnimationFrame(() => {
+        backdrop.classList.add('opacity-100');
+        modalContent.classList.remove('opacity-0', 'scale-95');
+    });
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+    
+    // Initialize form submission
+    submitScheduleForm();
+}
+
+function closeScheduleModal() {
+    const modal = document.getElementById('scheduleModal');
+    const backdrop = modal.querySelector('.absolute');
+    const modalContent = modal.querySelector('.transform');
+    
+    // Start closing animations
+    backdrop.classList.remove('opacity-100');
+    modalContent.classList.add('opacity-0', 'scale-95');
+    
+    // Hide modal after animation completes
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }, 300);
+}
+
+// Update the submitScheduleForm function
+function submitScheduleForm() {
+    const form = document.getElementById('scheduleForm');
+    
+    form.removeEventListener('submit', handleSubmit); // Remove any existing listeners
+    form.addEventListener('submit', handleSubmit);
+}
+
+async function handleSubmit(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
+    // Show loading state
+    const submitButton = document.querySelector('button[type="submit"][form="scheduleForm"]');
+    const originalText = submitButton.innerHTML;
+    submitButton.disabled = true;
+    submitButton.innerHTML = `
+        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Submitting...
+    `;
+
+    try {
+        // Collect form data
+        const formData = new FormData(form);
+        
+        // Send data to Web3Forms
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            // Show success message
+            showNotification('success', 'Thank you! Your service has been scheduled. We will contact you shortly to confirm.');
+            
+            // Close modal and reset form
+            closeScheduleModal();
+            form.reset();
+        } else {
+            throw new Error('Submission failed');
+        }
+    } catch (error) {
+        // Show error message
+        showNotification('error', 'Sorry, something went wrong. Please try again later.');
+    } finally {
+        // Reset button state
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalText;
+    }
+}
+
+// Helper function to show notifications
+function showNotification(type, message) {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white px-6 py-3 rounded-lg shadow-lg transform transition-all duration-500 translate-y-[-100%]`;
+    notification.innerHTML = `
+        <div class="flex items-center space-x-2">
+            ${type === 'success' 
+                ? '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
+                : '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>'
+            }
+            <span>${message}</span>
+        </div>
+    `;
+    document.body.appendChild(notification);
+
+    // Animate in
+    setTimeout(() => {
+        notification.style.transform = 'translateY(0)';
+    }, 100);
+
+    // Remove after 5 seconds
+    setTimeout(() => {
+        notification.style.transform = 'translateY(-100%)';
+        setTimeout(() => {
+            notification.remove();
+        }, 500);
+    }, 5000);
+}
+
+// Update the click handler for the Schedule Service button
+document.addEventListener('DOMContentLoaded', () => {
+    const scheduleButton = document.querySelector('a[href="#"].inline-flex.items-center.justify-center');
+    if (scheduleButton) {
+        scheduleButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            showScheduleModal();
+        });
+    }
+});
+
+// Close schedule modal when clicking outside
+document.getElementById('scheduleModal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) {
+        closeScheduleModal();
+    }
+});
  
