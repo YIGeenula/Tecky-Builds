@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeckyBuilds - Premium Computer Parts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body class="font-poppins bg-black min-h-screen text-white">
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-black">
+        <div class="text-center">
+            <img src="images/Logo.png" alt="TechParts Logo" 
+                 class="w-64 h-64 mx-auto mb-8 animate-pulse">
+            <div class="relative w-64 h-2 bg-gray-800 rounded-full overflow-hidden mx-auto">
+                <div id="loading-bar" 
+                     class="absolute top-0 left-0 h-full w-0 bg-gradient-to-r from-cyan-500 to-fuchsia-500 transition-all duration-[2000ms]">
+                </div>
+            </div>
+            <div class="mt-4 text-cyan-500 font-mono text-sm tracking-wider glitch-text">
+                INITIALIZING SYSTEM...
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="bg-white/10 backdrop-blur-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <img src="images/Navbar-Icon.png" alt="TechParts Logo" class="h-16 w-auto">
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-white hover:text-primary transition-colors">Home</a>
+                    <a href="#" class="text-white hover:text-primary transition-colors">Shop</a>
+                    <a href="#" class="text-white hover:text-primary transition-colors">Blog</a>
+                    <a href="#" class="text-white hover:text-primary transition-colors">About</a>
+                    <a href="#" class="text-white hover:text-primary transition-colors">Contact</a>
+                </div>
+
+                <!-- Cart -->
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <a href="#" class="text-white hover:text-primary transition-colors">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                            <span class="absolute -top-2 -right-2 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                        </a>
+                    </div>
+                    <span class="text-white">$0.00</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div id="hero-gradient" class="bg-gradient-to-br from-black via-black to-secondary gradient-transition">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-5rem)] flex items-center">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="space-y-8 max-w-xl mx-auto">
+                    <h1 class="text-5xl md:text-6xl font-bold leading-tight" style="text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);">
+                        Premium PC Parts
+                        <br>
+                        For Your Build
+                    </h1>
+                    <p class="text-gray-400 text-lg relative z-10" style="text-shadow: 0 0 10px rgba(255,255,255,0.3);">
+                        Build your dream PC with our high-quality components and expert guidance
+                    </p>
+                    <button class="cyber-button">
+                        Browse Products
+                    </button>
+                </div>
+
+                <!-- Right Image -->
+                <div class="relative flex justify-center items-center xl:scale-125">
+                    <img src="images/gpu-1.png" alt="Graphics Card" 
+                         class="w-full h-auto animate-[float_3s_ease-in-out_infinite] relative z-10"
+                         style="filter: drop-shadow(0 0 15px rgba(0,255,255,0.3));">
+                    
+                    <!-- Color Selector -->
+                    <div class="absolute -right-4 top-1/2 -translate-y-1/2 hidden md:flex flex-col space-y-4">
+                        <button onclick="changeBackground('blue')" class="w-4 h-4 rounded-full bg-[#00ffff] shadow-[0_0_10px_#00ffff] border-2 border-[#00ffff] transform scale-110"></button>
+                        <button onclick="changeBackground('purple')" class="w-4 h-4 rounded-full bg-[#ff00ff] shadow-[0_0_10px_#ff00ff] hover:border-2 hover:border-[#ff00ff] transition-all"></button>
+                        <button onclick="changeBackground('green')" class="w-4 h-4 rounded-full bg-[#00ff00] shadow-[0_0_10px_#00ff00] hover:border-2 hover:border-[#00ff00] transition-all"></button>
+                        <button onclick="changeBackground('orange')" class="w-4 h-4 rounded-full bg-[#ff9900] shadow-[0_0_10px_#ff9900] hover:border-2 hover:border-[#ff9900] transition-all"></button>
+                    </div>
+                    <div class="absolute bottom-[-3rem] left-1/2 -translate-x-1/2 flex md:hidden flex-row space-x-4">
+                        <button onclick="changeBackground('blue')" class="w-4 h-4 rounded-full bg-[#00ffff] shadow-[0_0_10px_#00ffff] border-2 border-[#00ffff] transform scale-110"></button>
+                        <button onclick="changeBackground('purple')" class="w-4 h-4 rounded-full bg-[#ff00ff] shadow-[0_0_10px_#ff00ff] hover:border-2 hover:border-[#ff00ff] transition-all"></button>
+                        <button onclick="changeBackground('green')" class="w-4 h-4 rounded-full bg-[#00ff00] shadow-[0_0_10px_#00ff00] hover:border-2 hover:border-[#00ff00] transition-all"></button>
+                        <button onclick="changeBackground('orange')" class="w-4 h-4 rounded-full bg-[#ff9900] shadow-[0_0_10px_#ff9900] hover:border-2 hover:border-[#ff9900] transition-all"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- After Hero Section -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <!-- Section Title -->
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold mb-4 text-white" style="text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);">
+                Build Your Dream Setup
+            </h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">
+                Choose from our wide range of premium PC components or let us build your custom gaming rig. 
+                Every part is carefully selected and tested for optimal performance.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Build Your Own PC Card (Large) -->
+            <div class="md:col-span-2 relative group overflow-hidden rounded-2xl">
+                <div class="relative h-[400px] overflow-hidden">
+                    <img src="images/build-pc.jpg" alt="Build PC" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <!-- Default visible text -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent transition-opacity duration-500 group-hover:opacity-0">
+                        <div class="absolute bottom-8 left-8 right-8">
+                            <h3 class="text-3xl font-bold mb-3 text-white">Custom PC Builder</h3>
+                            <p class="text-cyan-400 font-semibold">Click to explore building options →</p>
+                        </div>
+                    </div>
+                    <!-- Hover text -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                        <div class="absolute bottom-8 left-8 right-8 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                            <h3 class="text-3xl font-bold mb-3 text-white">
+                                Build Your Own PC In Minutes
+                            </h3>
+                            <p class="text-gray-300 mb-4">
+                                Sedid cursus cras viverra vivamus orcieque vitae, tellus lacus aliquet amet id vitae pharetra
+                            </p>
+                            <a href="#" class="inline-flex items-center text-orange-500 hover:text-orange-400 font-semibold">
+                                Make My PC
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ready To Run Gaming System -->
+            <div class="relative group overflow-hidden rounded-2xl">
+                <div class="relative h-[400px] overflow-hidden">
+                    <img src="images/gaming-pc.jpg" alt="Gaming PC" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <!-- Default visible text -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent transition-opacity duration-500 group-hover:opacity-0">
+                        <div class="absolute bottom-8 left-8 right-8">
+                            <h3 class="text-2xl font-bold mb-3 text-white">Gaming PCs</h3>
+                            <p class="text-cyan-400 font-semibold">Pre-built gaming systems →</p>
+                        </div>
+                    </div>
+                    <!-- Hover text -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                        <div class="absolute bottom-8 left-8 right-8 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                            <h3 class="text-2xl font-bold mb-3 text-white">
+                                Ready To Run Gaming System
+                            </h3>
+                            <p class="text-gray-300 mb-4 text-sm">
+                                Sedid cursus cras viverra vivamus orcieque vitae
+                            </p>
+                            <a href="#" class="inline-flex items-center text-orange-500 hover:text-orange-400 font-semibold">
+                                Shop Now
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Beyond Performance -->
+            <div class="relative group overflow-hidden rounded-2xl">
+                <div class="relative h-[400px] overflow-hidden">
+                    <img src="images/performance-pc.jpg" alt="Performance Parts" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <!-- Default visible text -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent transition-opacity duration-500 group-hover:opacity-0">
+                        <div class="absolute bottom-8 left-8 right-8">
+                            <h3 class="text-2xl font-bold mb-3 text-white">High Performance</h3>
+                            <p class="text-cyan-400 font-semibold">Premium components →</p>
+                        </div>
+                    </div>
+                    <!-- Hover text -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                        <div class="absolute bottom-8 left-8 right-8 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                            <h3 class="text-2xl font-bold mb-3 text-white">
+                                Beyond Performance
+                            </h3>
+                            <p class="text-gray-300 mb-4 text-sm">
+                                Sedid cursus cras viverra vivamus
+                            </p>
+                            <a href="#" class="inline-flex items-center text-orange-500 hover:text-orange-400 font-semibold">
+                                Explore Now
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Arrivals Section -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <!-- Section Title -->
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold mb-4 text-white" style="text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);">
+                New Arrivals
+            </h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">
+                Check out our latest products and stay ahead with cutting-edge technology
+            </p>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="relative overflow-hidden">
+            <div class="product-container overflow-hidden w-full">
+                <div class="product-slider flex transition-transform duration-500">
+                    <!-- First Set of Cards (Visible) -->
+                    <div class="product-slide min-w-full">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                            <!-- Product Card 1 -->
+                            <div class="bg-gray-900/50 rounded-xl overflow-hidden group hover:bg-gray-800/50 transition-all duration-300">
+                                <div class="relative overflow-hidden">
+                                    <img src="images/4090 gpu.jpg" alt="Graphics Card" 
+                                         class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                                    <div class="absolute top-4 right-4">
+                                        <span class="bg-primary px-3 py-1 rounded-full text-sm font-semibold">New</span>
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold mb-2">RTX 4090 Gaming OC</h3>
+                                    <p class="text-gray-400 text-sm">24GB GDDR6X Graphics Card</p>
+                                </div>
+                            </div>
+
+                            <!-- Product Card 2 -->
+                            <div class="bg-gray-900/50 rounded-xl overflow-hidden group hover:bg-gray-800/50 transition-all duration-300">
+                                <div class="relative overflow-hidden">
+                                    <img src="images/i9-13th.jpg" alt="CPU" 
+                                         class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                                    <div class="absolute top-4 right-4">
+                                        <span class="bg-primary px-3 py-1 rounded-full text-sm font-semibold">New</span>
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold mb-2">Intel Core i9-13900K</h3>
+                                    <p class="text-gray-400 text-sm">24-Core Desktop Processor</p>
+                                </div>
+                            </div>
+
+                            <!-- Product Card 3 -->
+                            <div class="bg-gray-900/50 rounded-xl overflow-hidden group hover:bg-gray-800/50 transition-all duration-300">
+                                <div class="relative overflow-hidden">
+                                    <img src="images/rog-mb.jpg" alt="Motherboard" 
+                                         class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                                    <div class="absolute top-4 right-4">
+                                        <span class="bg-primary px-3 py-1 rounded-full text-sm font-semibold">New</span>
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold mb-2">ROG MAXIMUS Z790</h3>
+                                    <p class="text-gray-400 text-sm">Intel ATX Gaming Motherboard</p>
+                                </div>
+                            </div>
+
+                            <!-- Product Card 4 -->
+                            <div class="bg-gray-900/50 rounded-xl overflow-hidden group hover:bg-gray-800/50 transition-all duration-300">
+                                <div class="relative overflow-hidden">
+                                    <img src="images/corsair-ram.jpg" alt="RAM" 
+                                         class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                                    <div class="absolute top-4 right-4">
+                                        <span class="bg-primary px-3 py-1 rounded-full text-sm font-semibold">New</span>
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold mb-2">Corsair Dominator</h3>
+                                    <p class="text-gray-400 text-sm">32GB DDR5-6000 RGB RAM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Second Set of Cards (Hidden Initially) -->
+                    <div class="product-slide min-w-full">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                            <!-- Additional Product Cards -->
+                            <!-- Product Card 5 -->
+                            <div class="bg-gray-900/50 rounded-xl overflow-hidden group hover:bg-gray-800/50 transition-all duration-300">
+                                <div class="relative overflow-hidden">
+                                    <img src="images/NZXT-Kraken-Z73.jpg" alt="CPU Cooler" 
+                                         class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                                    <div class="absolute top-4 right-4">
+                                        <span class="bg-primary px-3 py-1 rounded-full text-sm font-semibold">New</span>
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold mb-2">NZXT Kraken Z73</h3>
+                                    <p class="text-gray-400 text-sm">360mm LCD AIO Cooler</p>
+                                </div>
+                            </div>
+
+                            <!-- Product Card 6 -->
+                            <div class="bg-gray-900/50 rounded-xl overflow-hidden group hover:bg-gray-800/50 transition-all duration-300">
+                                <div class="relative overflow-hidden">
+                                    <img src="images/ssd.jpg" alt="SSD" 
+                                         class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                                    <div class="absolute top-4 right-4">
+                                        <span class="bg-primary px-3 py-1 rounded-full text-sm font-semibold">New</span>
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold mb-2">Samsung 990 PRO</h3>
+                                    <p class="text-gray-400 text-sm">2TB NVMe M.2 SSD</p>
+                                </div>
+                            </div>
+
+                            <!-- Product Card 7 -->
+                            <div class="bg-gray-900/50 rounded-xl overflow-hidden group hover:bg-gray-800/50 transition-all duration-300">
+                                <div class="relative overflow-hidden">
+                                    <img src="images/psu.jpg" alt="Power Supply" 
+                                         class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                                    <div class="absolute top-4 right-4">
+                                        <span class="bg-primary px-3 py-1 rounded-full text-sm font-semibold">New</span>
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold mb-2">Corsair RM1000x</h3>
+                                    <p class="text-gray-400 text-sm">1000W 80+ Gold PSU</p>
+                                </div>
+                            </div>
+
+                            <!-- Product Card 8 -->
+                            <div class="bg-gray-900/50 rounded-xl overflow-hidden group hover:bg-gray-800/50 transition-all duration-300">
+                                <div class="relative overflow-hidden">
+                                    <img src="images/casing.jpg" alt="PC Case" 
+                                         class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                                    <div class="absolute top-4 right-4">
+                                        <span class="bg-primary px-3 py-1 rounded-full text-sm font-semibold">New</span>
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold mb-2">Lian Li O11 Dynamic</h3>
+                                    <p class="text-gray-400 text-sm">Premium ATX Case</p>
+                                </div>
+                            </div>               
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Dots -->
+            <div class="product-dots flex justify-center mt-8 space-x-3">
+                <button onclick="showSlide(0)" class="w-2 h-2 rounded-full bg-white transition-all duration-300"></button>
+                <button onclick="showSlide(1)" class="w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300"></button>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</body>
+</html>
