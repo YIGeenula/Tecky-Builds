@@ -282,3 +282,28 @@ body {
         height: 60px;
     }
 }
+
+/* Add these styles to your existing CSS */
+@media (min-width: 1024px) and (max-width: 1536px) {
+    /* Adjust hero section image */
+    .xl\:scale-125 {
+        transform: scale(1) !important; /* Override the xl:scale-125 class */
+    }
+
+    /* Ensure the image doesn't overflow */
+    #hero-gradient .grid {
+        gap: 2rem !important; /* Reduce gap between grid items */
+    }
+
+    #hero-gradient img {
+        max-width: 90%; /* Reduce maximum width */
+        height: auto;
+    }
+}
+
+/* For smaller laptops */
+@media (min-width: 1024px) and (max-width: 1280px) {
+    #hero-gradient img {
+        max-width: 80%; /* Further reduce size for smaller laptops */
+    }
+}
